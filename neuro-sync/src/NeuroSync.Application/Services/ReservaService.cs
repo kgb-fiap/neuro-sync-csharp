@@ -151,6 +151,13 @@ namespace NeuroSync.Application.Services
                 throw new BusinessException("Reserva não encontrada.", HttpStatusCode.NotFound);
             }
 
+            var avaliacao = await _avaliacaoRepository.Query()
+                .FirstOrDefaultAsync(a => a.ReservaEstacaoId == id, cancellationToken);
+            if (avaliacao != null)
+            {
+                _avaliacaoRepository.Remove(avaliacao);
+            }
+
             _reservaRepository.Remove(reserva);
             await _reservaRepository.SaveChangesAsync(cancellationToken);
         }

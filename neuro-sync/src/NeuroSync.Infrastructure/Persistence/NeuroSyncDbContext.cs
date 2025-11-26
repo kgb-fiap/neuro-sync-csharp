@@ -187,6 +187,7 @@ namespace NeuroSync.Infrastructure.Persistence
                 entity.HasOne(e => e.ZonaSensorial).WithMany(z => z.Estacoes).HasForeignKey(e => e.ZonaSensorialId);
                 entity.HasMany(e => e.Sensores).WithOne(s => s.EstacaoTrabalho).HasForeignKey(s => s.EstacaoTrabalhoId);
                 entity.HasMany(e => e.Reservas).WithOne(r => r.EstacaoTrabalho).HasForeignKey(r => r.EstacaoTrabalhoId);
+                entity.Ignore(e => e.Ativo);
             });
 
             modelBuilder.Entity<TipoSensor>(entity =>
@@ -218,6 +219,7 @@ namespace NeuroSync.Infrastructure.Persistence
                 entity.HasOne(s => s.EstacaoTrabalho).WithMany(e => e.Sensores).HasForeignKey(s => s.EstacaoTrabalhoId);
                 entity.HasOne(s => s.TipoSensor).WithMany(t => t.Sensores).HasForeignKey(s => s.TipoSensorId);
                 entity.Ignore(s => s.DataCadastro);
+                entity.Ignore(s => s.Ativo);
             });
 
             modelBuilder.Entity<LeituraSensor>(entity =>
@@ -233,6 +235,7 @@ namespace NeuroSync.Infrastructure.Persistence
                 entity.Property(l => l.DataProcessamento).HasColumnName("DATA_PROCESSAMENTO").HasDefaultValueSql("SYSDATE");
                 entity.HasOne(l => l.Sensor).WithMany(s => s.Leituras).HasForeignKey(l => l.SensorId);
                 entity.Ignore(l => l.DataCadastro);
+                entity.Ignore(l => l.Ativo);
             });
 
             modelBuilder.Entity<StatusReserva>(entity =>
@@ -245,6 +248,7 @@ namespace NeuroSync.Infrastructure.Persistence
                 entity.Property(s => s.Finalizador).HasColumnName("E_FINALIZADOR").HasConversion(boolToCharConverter).HasMaxLength(1).HasDefaultValue(false);
                 entity.HasIndex(s => s.CodigoStatus).IsUnique();
                 entity.Ignore(s => s.DataCadastro);
+                entity.Ignore(s => s.Ativo);
             });
 
             modelBuilder.Entity<ReservaEstacao>(entity =>
@@ -268,6 +272,7 @@ namespace NeuroSync.Infrastructure.Persistence
                 entity.HasOne(r => r.EstacaoTrabalho).WithMany(e => e.Reservas).HasForeignKey(r => r.EstacaoTrabalhoId);
                 entity.HasOne(r => r.Status).WithMany(s => s.Reservas).HasForeignKey(r => r.StatusReservaId);
                 entity.Ignore(r => r.DataCadastro);
+                entity.Ignore(r => r.Ativo);
             });
 
             modelBuilder.Entity<AvaliacaoEstacao>(entity =>
@@ -284,6 +289,7 @@ namespace NeuroSync.Infrastructure.Persistence
                 entity.Property(a => a.DataAvaliacao).HasColumnName("DATA_AVALIACAO").HasDefaultValueSql("SYSDATE");
                 entity.HasOne(a => a.Reserva).WithOne(r => r.Avaliacao).HasForeignKey<AvaliacaoEstacao>(a => a.ReservaEstacaoId);
                 entity.Ignore(a => a.DataCadastro);
+                entity.Ignore(a => a.Ativo);
             });
         }
     }

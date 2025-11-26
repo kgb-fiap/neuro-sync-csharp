@@ -1,0 +1,833 @@
+{
+	"info": {
+		"_postman_id": "a24ee550-5cc4-418e-854e-fd587c0a1d47",
+		"name": "Neuro-Sync API Dotnet",
+		"description": "Coleção Postman para testar a API Neuro-Sync.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13864068"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "POST /auth/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"pm.environment.set('jwt', res.token);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"henrique.souza@neurosync.com\",\n  \"senha\": \"HASH_HENRIQUE\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "GET /api/usuarios/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/usuarios/{{usuarioId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"{{usuarioId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/usuarios/search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/usuarios/search?pageNumber=1&pageSize=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"search"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/usuarios",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"setorId\": 81,\n  \"nomeCompleto\": \"Novo Usuário\",\n  \"emailCorporativo\": \"novo@neurosync.com\",\n  \"senha\": \"senha123\",\n  \"flagNeurodivergente\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /api/usuarios/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nomeCompleto\": \"Usuário Atualizado\",\n  \"emailCorporativo\": \"novo@neurosync.com\",\n  \"flagNeurodivergente\": false,\n  \"ativo\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/usuarios/{{usuarioId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"{{usuarioId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /api/usuarios/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/usuarios/{{usuarioId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"{{usuarioId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estacoes",
+			"item": [
+				{
+					"name": "GET /api/estacoes/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/estacoes/{{estacaoId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"estacoes",
+								"{{estacaoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/estacoes/search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/estacoes/search?pageNumber=1&pageSize=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"estacoes",
+								"search"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/estacoes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"zonaSensorialId\": 71,\n  \"codigoEstacao\": \"EST-001\",\n  \"descricao\": \"Estação 001\",\n  \"permiteReserva\": true,\n  \"permiteUsoEspontaneo\": true,\n  \"statusEstacao\": \"ATIVA\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/estacoes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"estacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /api/estacoes/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"zonaSensorialId\": 71,\n  \"codigoEstacao\": \"EST-001\",\n  \"descricao\": \"Estação 001 - Atualizada\",\n  \"permiteReserva\": true,\n  \"permiteUsoEspontaneo\": false,\n  \"statusEstacao\": \"EM_MANUTENCAO\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/estacoes/{{estacaoId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"estacoes",
+								"{{estacaoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /api/estacoes/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/estacoes/{{estacaoId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"estacoes",
+								"{{estacaoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/estacoes/{id}/indice-conforto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/estacoes/{{estacaoId}}/indice-conforto?inicio=2025-01-01T08:00:00Z&fim=2025-12-01T18:00:00Z",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"estacoes",
+								"{{estacaoId}}",
+								"indice-conforto"
+							],
+							"query": [
+								{
+									"key": "inicio",
+									"value": "2025-01-01T08:00:00Z"
+								},
+								{
+									"key": "fim",
+									"value": "2025-12-01T18:00:00Z"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/estacoes/{id}/taxa-ocupacao",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/estacoes/{{estacaoId}}/taxa-ocupacao?inicio=2025-01-01T08:00:00Z&fim=2025-12-01T18:00:00Z",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"estacoes",
+								"{{estacaoId}}",
+								"taxa-ocupacao"
+							],
+							"query": [
+								{
+									"key": "inicio",
+									"value": "2025-01-01T08:00:00Z"
+								},
+								{
+									"key": "fim",
+									"value": "2025-12-01T18:00:00Z"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservas",
+			"item": [
+				{
+					"name": "GET /api/reservas/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/{{reservaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"{{reservaId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/reservas/search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/search?pageNumber=1&pageSize=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"search"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/reservas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"usuarioId\": 74,\n  \"estacaoTrabalhoId\": 71,\n  \"statusReservaId\": 81,\n  \"dataHoraInicioPrevista\": \"2025-12-01T08:00:00Z\",\n  \"dataHoraFimPrevista\": \"2025-12-01T10:00:00Z\",\n  \"origemReserva\": \"WEB\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Status Cancelado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/{{reservaId}}/status?statusId=85&motivo=cancelado",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"{{reservaId}}",
+								"status"
+							],
+							"query": [
+								{
+									"key": "statusId",
+									"value": "85"
+								},
+								{
+									"key": "motivo",
+									"value": "cancelado"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/reservas/{id}/compatibilidade",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/{{reservaId}}/compatibilidade",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"{{reservaId}}",
+								"compatibilidade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/reservas/{id}/avaliacao",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"notaConfortoGeral\": 5,\n  \"notaRuido\": 4,\n  \"notaLuz\": 5,\n  \"notaEstimuloVisual\": 4,\n  \"comentario\": \"Muito confortável\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/{{reservaId}}/avaliacao",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"{{reservaId}}",
+								"avaliacao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /api/reservas/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reservas/{{reservaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reservas",
+								"{{reservaId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Preferencias Sensoriais",
+			"item": [
+				{
+					"name": "POST /api/preferencias",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"usuarioId\": 74,\n  \"dataInicioVigencia\": \"2025-12-01T00:00:00Z\",\n  \"ruidoMaxDb\": 55,\n  \"luzMinLux\": 300,\n  \"luzMaxLux\": 800,\n  \"toleranciaVisual\": 3,\n  \"prefereZona\": \"SILENCIOSA\",\n  \"observacoesPreferencia\": \"Prefere pouca luz e baixo ruído\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/preferencias",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"preferencias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/preferencias/usuario/{usuarioId}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/preferencias/usuario/{{usuarioId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"preferencias",
+								"usuario",
+								"{{usuarioId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "{{baseUrl}}"
+		},
+		{
+			"key": "jwt",
+			"value": "{{jwt}}"
+		},
+		{
+			"key": "usuarioId",
+			"value": "{{usuarioId}}"
+		},
+		{
+			"key": "estacaoId",
+			"value": "{{estacaoId}}"
+		},
+		{
+			"key": "reservaId",
+			"value": "{{reservaId}}"
+		}
+	]
+}
